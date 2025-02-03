@@ -29,6 +29,18 @@ def MakeDiagDom(A):
     :param A: The matrix to sort
     :return: The sorted matrix
     """
+    """outer/inner for loops i,r to compare largest pivot vals in rows"""
+    n=len(A)
+    for i in range(n): #loop/iterate through matrix
+        pivot=i
+        max = abs(A[i][i]) #checks for maximum value & assigns to var.max
+        for r in range(i+1,n): #i+1 to n checks all rows
+            if abs(A[r][i]>max): #pivots if Row/Column val > max
+                pivot = r #assign r to var.pivot
+                max = abs(A[r][i]) #checks max in inner loop so if pivot!=i we apply this
+        if pivot != i: #swaps two rows if max =abs(A[r][i]) using SwapRows
+            A = SwapRows(A,i,pivot) #assign A as callSwapRows(plug in A,i,piv)
+    return A #return Diagonally Dominant matrix
     pass
 
 # region row operations

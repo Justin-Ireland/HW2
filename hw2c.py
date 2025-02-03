@@ -1,18 +1,9 @@
 from copy import deepcopy
 
-def main():
-    pass
+"""This function uses the Gauss-Seidel method to estimate the solution 
+to set of N linear equations expressed in matrix form as Ax = b.
+A convergence check is implemented and uses changes between iterations to check convergence."""
 
-if __name__=="__main":
-    main()
-
-
-#Reed's portion
-
-from NumericalMethods import GaussSeidel
-
-
-# Implement Gauss-Seidel Method without numpy and without b/b2 vectors
 def GaussSeidel(A, x_init, max_iter=100, tol=1e-10):
     n = len(A)
     x = x_init.copy()
@@ -31,6 +22,8 @@ def GaussSeidel(A, x_init, max_iter=100, tol=1e-10):
 
     return x
 
+"""The main function sets variables for two matrices and will use the above Gauss Seidel method to solve
+ matrices and print output to user"""
 
 def main():
     # Augmented coefficient matrix (A with last column as the constants)
@@ -38,8 +31,8 @@ def main():
         [1, 4, 1, 12],
         [2, 1, 2, 10]]
 
-    # Initial guess (optional)
-    x_init = [0, 0, 0]  # Starting guess for [x, y, z]
+    # Initial guess
+    x_init = [0, 0, 0]  #starting point set 0 in [x,y,z] form to right of matrix
 
     # Solve the system using Gauss-Seidel method
     solution = GaussSeidel(A, x_init)
@@ -53,15 +46,12 @@ def main():
         [-1, 2, 7, 3, 37]]
 
     # Initial guess (optional)
-    x_init2 = [0, 0, 0, 0]  # Starting guess for [x, y, z, w]
+    x_init2 = [0, 0, 0, 0]  # Starting point for [x, y, z, w] in 4x5
 
     # Solve the second system using Gauss-Seidel method
-    solution2 = GaussSeidel(A2, x_init2)
+    solution2 = GaussSeidel(A2, x_init2) # calls G-S and uses A2 matrix and starting point to solve
 
     print("Solution estimated by Gauss-Seidel for the second system:", solution2)
 
-
-if __name__ == "__main__":
+if __name__=="__main":
     main()
-
-#End Reed's portion
