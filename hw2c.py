@@ -5,14 +5,14 @@ to set of N linear equations expressed in matrix form as Ax = b.
 A convergence check is implemented and uses changes between iterations to check convergence."""
 
 def GaussSeidel(A, x_init, max_iter=100, tol=1e-10):
-    n = len(A)
+    n = len(A) #size of matrix
     x = x_init.copy()
 
-    for _ in range(max_iter):
-        x_new = x.copy()
-        for i in range(n):
-            sigma = sum(A[i][j] * x_new[j] for j in range(n) if j != i)
-            x_new[i] = (A[i][n] - sigma) / A[i][i]
+    for _ in range(max_iter): #loop to 100 iterations maximum
+        x_new = x.copy() #previous iteration
+        for i in range(n): #loops through each value in A
+            sigma = sum(A[i][j] * x_new[j] for j in range(n) if j != i) #sums if j not equal to i
+            x_new[i] = (A[i][n] - sigma) / A[i][i] #gauss-seidel formula
 
         # Check for convergence (using list-based norm calculation)
         norm = sum((x_new[i] - x[i]) ** 2 for i in range(n)) ** 0.5
