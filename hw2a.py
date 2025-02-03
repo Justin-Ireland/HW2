@@ -1,41 +1,49 @@
 #region imports
 from math import sqrt, pi, exp
-from NumericalMethods import GPDF, args, Simpson, Probability
-
+from NumericalMethods import GPDF, Simpson, Probability
 #endregion
 
-#region function definitions
 def main():
     """
-    I want to integrate the Gaussian probability density function between
-    a left hand limit = (mean - 5*stDev) to a right hand limit = (c).  Here
-    is my step-by-step plan:
-    1. Decide mean, stDev, and c and if I want P(x>c) or P(x<c).
-    2. Define args tuple and c to be passed to Probability from NM
-    3. Pass args, and a callback function (GPDF) to Probability
-    4. In probability, pass along GPDF to Simpson along with the appropriate args tuple
-    5. Return the required probability from Probability and print to screen.
-    :return: print results to screen.
+    Demonstrates the Probability(...) function:
+      1) Prompt user for mean, stDev, and c.
+      2) Ask whether we want P(x>c) or P(x<c).
+      3) Compute Probability using our Probability() function from NumericalMethods.
+      4) Print the result.
+
+    We can also illustrate the specific homework examples:
+      P(x < 105 | N(100, 12.5))
+      P(x > 100 + 2*3 | N(100, 3)) => P(x > 106)
     """
-    #region testing user input
-    # The following code solicits user input through the CLI.
-    #float changes user input to number
-    mean = float(input("Population mean? "))
-    stDev = float(input("Standard deviation?"))
-    c = float(input("c value?"))
-    GT = True if input("Probability greater than c?").lower() in ["y","yes","true"] else "False"
-    #no need to float() GT b/c boolean
+    # Example: direct usage (no user input):
+    p1 = Probability(GPDF, (100, 12.5), 105, GT=False)
+    p2 = Probability(GPDF, (100, 3), 106, GT=True)
+
+    print(f"P(x<105|N(100,12.5))={p1:.4f}")
+    print(f"P(x>106|N(100,3))={p2:.4f}")
+
+    print("\nNow, a user-driven example...\n")
+    mean_str = input("Population mean? ")
+    stdev_str = input("Standard deviation? ")
+    c_str = input("c value? ")
+    gt_str = input("Probability greater than c? (y/n): ").lower()
+
+    # Converting input strings to numbers
+    mean = float(mean_str)
+    stDev = float(stdev_str)
+    c = float(c_str)
+    GT = (gt_str in ["y","yes","true"]) #no need to float b/c boolean
 
     """following code calls probability function and applies the user inputs above
-    to test if x is above or below rhl c and print probability based of range x"""
+        to test if x is above or below rhl c and print probability based of range x"""
 
-    probx = Probability(GPDF, args, c,GT) #assign variable to probability function to condense it
+    prob = Probability(GPDF, (mean, stDev), c, GT) #assign variable to probability function to condense it
+
+    # Print result
     if GT: #if GT true print P(x>c | N(m,stdev)):probability
-        print(f"P(x>{c}|N({mean},{stDev}))={probx:.4f}")
+        print(f"P(x>{c}|N({mean},{stDev}))={prob:.6f}")
     else: #GT False then print P(x<c | N(m,stdev)):probability
-        print(f"P(x<{c}|N({mean},{stDev}))={probx:.4f}")
-    #endregion
-#endregion
+        print(f"P(x<{c}|N({mean},{stDev}))={prob:.6f}")
 
 if __name__ == "__main__":
     main()

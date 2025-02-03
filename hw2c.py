@@ -1,57 +1,33 @@
 from copy import deepcopy
-
-"""This function uses the Gauss-Seidel method to estimate the solution 
-to set of N linear equations expressed in matrix form as Ax = b.
-A convergence check is implemented and uses changes between iterations to check convergence."""
-
-def GaussSeidel(A, x_init, max_iter=100, tol=1e-10):
-    n = len(A) #size of matrix
-    x = x_init.copy()
-
-    for _ in range(max_iter): #loop to 100 iterations maximum
-        x_new = x.copy() #previous iteration
-        for i in range(n): #loops through each value in A
-            sigma = sum(A[i][j] * x_new[j] for j in range(n) if j != i) #sums if j not equal to i
-            x_new[i] = (A[i][n] - sigma) / A[i][i] #gauss-seidel formula
-
-        # Check for convergence (using list-based norm calculation)
-        norm = sum((x_new[i] - x[i]) ** 2 for i in range(n)) ** 0.5
-        if norm < tol:
-            break
-        x = x_new
-
-    return x
-
-"""The main function sets variables for two matrices and will use the above Gauss Seidel method to solve
- matrices and print output to user"""
+from NumericalMethods import GaussSeidel
 
 def main():
-    # Augmented coefficient matrix (A with last column as the constants)
-    A = [[3, 1, -1, 2],
-        [1, 4, 1, 12],
-        [2, 1, 2, 10]]
+    """This function uses the Gauss-Seidel method to estimate the solution
+    to set of N linear equations expressed in matrix form as Ax = b. sets variables for two matrices, solves
+    matrices and print output to user"""
 
-    # Initial guess
-    x_init = [0, 0, 0]  #starting point set 0 in [x,y,z] form to right of matrix
+    A1 = [[3.0,  1.0, -1.0,  2.0], #matrix 1 3x3
+        [1.0,  4.0,  1.0, 12.0],
+        [2.0,  1.0,  2.0, 10.0]]
 
-    # Solve the system using Gauss-Seidel method
-    solution = GaussSeidel(A, x_init)
+    x_init = [0.0, 0.0, 0.0]  ##starting point set 0 in [x,y,z] form to right of matrix
+    solution = GaussSeidel(A1, x_init, Niter=15)
+    print("Solution to 3x3 system [3,1,-1; 1,4,1; 2,1,2]:", solution)
 
-    print("Solution estimated by Gauss-Seidel:", solution)
+    """Now we solve the 4x4 matrix using Gauss Seidel with a starting point [x,y,z,w] ==> zero"""
+    A2 = [[ 1.0, -10.0,  2.0,  4.0,  2.0], #matrix 2 4x4
+        [ 3.0,   1.0,  4.0, 12.0, 12.0],
+        [ 9.0,   2.0,  3.0,  4.0, 21.0],
+        [-1.0,   2.0,  7.0,  3.0, 37.0]]
 
-    # Another example for a different system
-    A2 = [[1, -10, 2, 4, 2],
-        [3, 1, 4, 12, 12],
-        [9, 2, 3, 4, 21],
-        [-1, 2, 7, 3, 37]]
 
-    # Initial guess (optional)
-    x_init2 = [0, 0, 0, 0]  # Starting point for [x, y, z, w] in 4x5
+    x_init2 = [0.0, 0.0, 0.0, 0.0]  # initial starting point for [x,y,z,w]
+    solution2 = GaussSeidel(A2, x_init2, Niter=15) #call G-S for A2 w/ 15 iterations
+    print("Solution to 4x4 system [1,-10,2,4; 3,1,4,12; 9,2,3,4; -1,2,7,3]:", solution2)
+    # calls G-S and uses A2 matrix and starting point to solve
 
-    # Solve the second system using Gauss-Seidel method
-    solution2 = GaussSeidel(A2, x_init2) # calls G-S and uses A2 matrix and starting point to solve
+    """(blanket statement: Cite ChatGPT to correct code into properly running program for NM.py, hw2a,b,c.py"""
+    #endregion
 
-    print("Solution estimated by Gauss-Seidel for the second system:", solution2)
-
-if __name__=="__main":
+if __name__ == "__main__":
     main()

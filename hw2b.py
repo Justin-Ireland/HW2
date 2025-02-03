@@ -2,38 +2,34 @@
 from NumericalMethods import Secant
 from math import cos
 #endregion
-
-#region function definitions
+"""defining functions so we can call them into secant function"""
 def fn1(x):
-    return x - 3*cos(x)
-
-"""as stated below, fn1(x)=x-3cos(x) & fn2(x)=cos(2x)x^3 will be implemented in the
-secant function in order to find root of fcn(x)"""
+    return x - 3 * cos(x)
 
 def fn2(x):
+
     return cos(2*x) * (x**3)
 
+"""as stated below, fn1(x)=x-3cos(x) & fn2(x)=cos(2x)x^3 will be implemented in the
+secant function in order to find and print roots of fcn(x) (secant function)"""
 def main():
     """
-       fn1:  x-3cos(x)=0; with x0=1, x1= 2, maxiter = 5 and xtol = 1e-4
-       fn2:  cos(2x)*x**3; with x0=1, x1= 2, maxiter = 15 and xtol = 1e-8
-       fn2:   with x0=1, x1= 2, maxiter = 3 and xtol = 1e-8
-
-       I observe that for functions 2 and 3, the answer should be pi/2 or about 1.57
-    just print results
+    We want to demonstrate the Secant function with:
+      1) fn1(x) = x - 3cos(x), x0=1, x1=2, maxiter=5,  xtol=1e-4
+      2) fn2(x) = cos(2x)*x^3, x0=1, x1=2, maxiter=15, xtol=1e-8
+      3) fn2(x) again with x0=1, x1=2, maxiter=3,  xtol=1e-8
     """
-    r1 = Secant(fn1, 1, 2, 5,1e-4)
-    r2 = Secant(fn2, 1,2,15, 1e-8)
-    r3 = Secant(fn2,1,2,3,1e-8)
-    #variables set for secant function with x & iter inputs which find root
-    #following code prints results
-    print("root of fn1 = {root:0.4f}, after {1} iterations".format(root=r1[0], iter=r1[1]))
+    # 1) fn1
+    r1 = Secant(fn1, 1, 2, maxiter=5, xtol=1e-4) #variables set for secant function with x & iter inputs which find root
+    print("Root of fn1(x)=x-3cos(x) => {0:.6f}, found in {1} iterations".format(r1[0], r1[1]))
 
-    print("root of fn2 = {root:0.4f}, after {1} iterations (maxiter=15)".format(root=r2[0], iter=r2[1]))
+    # 2) fn2 (maxiter=15, xtol=1e-8)
+    r2 = Secant(fn2, 1, 2, maxiter=15, xtol=1e-8)
+    print("Root of fn2(x)=cos(2x)*x^3 => {0:.6f}, found in {1} iterations (maxiter=15)".format(r2[0], r2[1]))
 
-    print("root of fn2 = {root:0.4f}, after {1} iterations (maxiter=3)".format(root=r3[0], iter=r3[1]))
+    # 3) fn2 again (maxiter=3, xtol=1e-8)
+    r3 = Secant(fn2, 1, 2, maxiter=3, xtol=1e-8)
+    print("Root of fn2(x)=cos(2x)*x^3 => {0:.6f}, found in {1} iterations (maxiter=3)".format(r3[0], r3[1]))
 
-#endregion
-
-if __name__=="__main__":
+if __name__ == "__main__":
     main()
