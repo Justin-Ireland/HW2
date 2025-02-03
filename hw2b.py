@@ -33,7 +33,7 @@ if __name__=="__main__":
 
 
 
-# Reed's portion
+#Reed's portion
 
 #region imports
 from NumericalMethods import Secant
@@ -76,4 +76,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-# End Reed's portion
+#End Reed's portion

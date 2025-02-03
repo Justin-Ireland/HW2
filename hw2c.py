@@ -7,7 +7,7 @@ if __name__=="__main":
     main()
 
 
-# Reed's portion
+#Reed's portion
 
 from NumericalMethods import GaussSeidel
 
@@ -64,4 +64,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-# End Reed's portion
+#End Reed's portion
